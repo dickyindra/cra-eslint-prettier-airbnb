@@ -67,3 +67,43 @@ I using prettier configuration from:
 	"useTabs": false
 }
 ```
+
+## Husky + Lint-Staged + Pre-commit Hooks
+
+1. Edit file package.json and add fix Eslint & Prettier script.
+
+```
+"scripts": {
+	"start": "react-scripts start",
+	"build": "react-scripts build",
+	"test": "react-scripts test",
+	"eject": "react-scripts eject",
+	"lint": "eslint src/**/*.js",
+	"lint:fix": "eslint src/**/*.js --fix",
+	"prettier": "prettier --check src/**/*.js",
+	"prettier:fix": "prettier --write src/**/*.js"
+},
+```
+
+2. Install & Integration Husky + Lint-Staged + Pre-commit Hooks
+
+```
+npm i -D husky lint-staged
+```
+
+Edit file package.json:
+
+```
+"husky": {
+	"hooks": {
+		"pre-commit": "lint-staged --allow-empty"
+	}
+},
+"lint-staged": {
+	"*.js": [
+		"npm run lint:fix",
+		"npm run prettier:fix",
+		"git add"
+	]
+},
+```
